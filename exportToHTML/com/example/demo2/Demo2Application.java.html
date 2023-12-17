@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Demo2Application.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Demo2Application.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">demo2</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">boot</span><span class="s2">.</span><span class="s1">SpringApplication</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">boot</span><span class="s2">.</span><span class="s1">autoconfigure</span><span class="s2">.</span><span class="s1">SpringBootApplication</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">context</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">Bean</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">web</span><span class="s2">.</span><span class="s1">servlet</span><span class="s2">.</span><span class="s1">config</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">CorsRegistry</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">web</span><span class="s2">.</span><span class="s1">servlet</span><span class="s2">.</span><span class="s1">config</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">WebMvcConfigurer</span><span class="s2">;</span>
+
+<span class="s1">@SpringBootApplication</span>
+<span class="s0">public class </span><span class="s1">Demo2Application </span><span class="s2">{</span>
+
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s1">SpringApplication</span><span class="s2">.</span><span class="s1">run</span><span class="s2">(</span><span class="s1">Demo2Application</span><span class="s2">.</span><span class="s0">class</span><span class="s2">, </span><span class="s1">args</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Bean</span>
+    <span class="s0">public </span><span class="s1">WebMvcConfigurer corsConfigurer</span><span class="s2">() {</span>
+        <span class="s0">return new </span><span class="s1">WebMvcConfigurer</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">addCorsMappings</span><span class="s2">(</span><span class="s1">CorsRegistry registry</span><span class="s2">) {</span>
+                <span class="s1">registry</span><span class="s2">.</span><span class="s1">addMapping</span><span class="s2">(</span><span class="s3">&quot;/**&quot;</span><span class="s2">).</span><span class="s1">allowedOrigins</span><span class="s2">(</span><span class="s3">&quot;http://localhost:8080/&quot;</span><span class="s2">, </span><span class="s3">&quot;http://breneisminecraft.duckdns.org:5080/&quot;</span><span class="s2">, </span><span class="s3">&quot;http://127.0.0.1:5500/&quot;</span><span class="s2">).</span><span class="s1">allowedMethods</span><span class="s2">(</span><span class="s3">&quot;GET&quot;</span><span class="s2">, </span><span class="s3">&quot;POST&quot;</span><span class="s2">, </span><span class="s3">&quot;PUT&quot;</span><span class="s2">, </span><span class="s3">&quot;DELETE&quot;</span><span class="s2">).</span><span class="s1">allowedHeaders</span><span class="s2">(</span><span class="s3">&quot;*&quot;</span><span class="s2">).</span><span class="s1">maxAge</span><span class="s2">(</span><span class="s4">3600</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">};</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
