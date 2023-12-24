@@ -35,7 +35,7 @@ public final class Login {
             }
             else if(!isAccountValid(username, password)){
                 Connection connection = SQLLogin.connect();
-                String statement = "INSERT INTO LOGIN VALUES ('" + email + "', '" + username + "', '" + PasswordEncryptor.encrypt(password) + "')";
+                String statement = "INSERT INTO LOGIN VALUES ('" + username + "', '" + PasswordEncryptor.encrypt(password) + "', '" + email + "')";
                 Statement stmt = connection.createStatement();
                 stmt.executeQuery(statement);
                 connection.close();
