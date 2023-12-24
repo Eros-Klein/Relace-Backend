@@ -61,7 +61,7 @@ public class Controller {
                 ResultSet rawResults = stmt.executeQuery(statement);
                 List<String> results = new ArrayList<>();
                 while(rawResults.next()){
-                    results.add(rawResults.getString(2));
+                    results.add(rawResults.getString(1));
                 }
                 connection.close();
                 return results.toArray(new String[results.size()]);
