@@ -94,6 +94,6 @@ public final class Login {
         return password.length() >= 8 && password.length() <= 50;
     }
     private boolean isEmailValid(String email){
-        return email.split("@").length == 2 && email.split("@")[1].split(".").length >= 2 && email.length() <= 100;
+        return email.split("@").length == 2 && email.split("@")[1].split("\\.").length >= 2 && email.length() <= 100;
     }
 }
