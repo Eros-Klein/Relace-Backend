@@ -1,0 +1,3 @@
+INFO: Encrypting password  |  at PasswordEncryptor - encrypt
+INFO: Password encrypted successfully  |  at PasswordEncryptor - encrypt
+INFO: Decrypting password  |  at PasswordEncryptor - decrypt
