@@ -17,7 +17,7 @@ public class Messenger {
     public static boolean sendMessage(String sender, String receiver, String message, String password){
         try{
             Connection connection = SQLLogin.connect();
-            if(Login.isAccountValid(sender, password)){
+            if(Login.isAccountValid(sender, password).success){
                 System.out.println(new java.sql.Date(new Date().getTime()));
                 System.out.println(new java.sql.Date(new Date().getTime()));
                 System.out.println(new Date().getTime());

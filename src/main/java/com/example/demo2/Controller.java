@@ -1,5 +1,6 @@
 package com.example.demo2;
 
+import com.example.demo2.responseinterfaces.loginResponse;
 import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo2.Message;
@@ -22,7 +23,7 @@ public class Controller {
         return results;
     }
     @GetMapping("/insertUser/{username}/{password}/{email}")
-    public boolean insertAccount(@PathVariable String email ,@PathVariable String username, @PathVariable String password){
+    public String insertAccount(@PathVariable String email ,@PathVariable String username, @PathVariable String password){
         return Login.addAccount(username, password, email);
     }
     @DeleteMapping("/removeAccount/{username}/{password}")
@@ -30,8 +31,16 @@ public class Controller {
         return Login.removeAccount(username, password);
     }
     @GetMapping("/validUser/{username}/{password}")
-    public boolean validAccount(@PathVariable String username, @PathVariable String password){
+    public loginResponse validAccount(@PathVariable String username, @PathVariable String password){
             return Login.isAccountValid(username, password);
+    }
+    @GetMapping("/getNewToken/{username}/{password}")
+    public String login(@PathVariable String username, @PathVariable String password){
+        return Login.login(username, password);
+    }
+    @GetMapping("/login/{username}/{token}")
+    public boolean loginByToken(@PathVariable String username, @PathVariable String token){
+            return Login.loginByToken(username, token);
     }
     @PostMapping("/sendMessage/{sender}/{receiver}/{message}/{password}")
     public boolean sendMessage(@PathVariable String sender, @PathVariable String receiver, @PathVariable String message, @PathVariable String password){

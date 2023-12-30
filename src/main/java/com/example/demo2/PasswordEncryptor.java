@@ -51,43 +51,4 @@ public final class PasswordEncryptor {
             return "";
         }
     }
-    public static String decrypt(String password){
-        Logger.getInstance().logInfo("Decrypting password", "PasswordEncryptor", "decrypt");
-        String[] result = {""};
-
-        String[] passwordParts = password.split("[?!]");
-        for (String passwordPart : passwordParts) {
-            String i = "";
-            for(char c : passwordPart.toCharArray()){
-                int j = (int) c;
-                if(j%10 != 0){
-                    if(j == 81){
-                        j = 0;
-                    }
-                    else{
-                        j = (127 - j)/10;
-                    }
-                }
-                else{
-                    while (j>= 10){
-                        j /= 10;
-                    }
-                }
-                i += j;
-            }
-            if(i.isEmpty()){
-                Logger.getInstance().logWarning("Password part was empty", "PasswordEncryptor", "decrypt");
-            }
-            else{
-                Logger.getInstance().logInfo("Decrypted part of password: " + (char)Integer.parseInt(i), "PasswordEncryptor", "decrypt");
-                result[0] += (char)Integer.parseInt(i);
-            }
-        }
-        String finalPassword = "";
-        for(char c : result[0].toCharArray()){
-            finalPassword += (char) (c - result[0].length());
-        }
-        Logger.getInstance().logInfo("Password decrypted successfully", "PasswordEncryptor", "decrypt");
-        return finalPassword;
-    }
 }
