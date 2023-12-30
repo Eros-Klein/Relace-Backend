@@ -19,7 +19,7 @@ public final class Login {
         }
         return instance;
     }
-    public static String addAccount(String username, String password, String email){
+    public static loginResponse addAccount(String username, String password, String email){
         try{
             username = username.trim();
             password = password.trim();
@@ -34,21 +34,24 @@ public final class Login {
             else if(!getInstance().isPasswordValid(password)){
                 throw new LoginException("Password is not valid");
             }
-            else if(!isAccountValid(username, password)){
+            else if(!isAccountValid(username, password).success){
                 Connection connection = SQLLogin.connect();
+
+                loginResponse response = null;
                 String token = Utils.getRandomString(20);
                 String statement = "INSERT INTO LOGIN VALUES ('" + username + "', '" + PasswordEncryptor.encrypt(password) + "', '" + email + "', '" + token + "')";
                 Statement stmt = connection.createStatement();
                 stmt.executeQuery(statement);
+
                 connection.close();
-                return token;
+                return new loginResponse(token, true);
             }
             Logger.getInstance().logWarning("Account already exists", "Login", "addAccount");
-            return null;
+            return new loginResponse(false);
         }
         catch (SQLException | LoginException e){
             Logger.getInstance().logError(e.getMessage(), "Login", "addAccount");
-            return null;
+            return new loginResponse(false);
         }
     }
     public static boolean removeAccount(String username, String password){
@@ -117,16 +120,18 @@ public final class Login {
         try{
             Connection connection = SQLLogin.connect();
 
+            loginResponse response = null;
             String statement = "SELECT TOKEN FROM LOGIN WHERE USERNAME = '" + username + "' AND PASS = '" + PasswordEncryptor.encrypt(password) + "'";
             Statement stmt = connection.createStatement();
             ResultSet rawResults = stmt.executeQuery(statement);
             boolean result = rawResults.next();
             Logger.getInstance().logInfo("Information for " + username + " was matching database: " + result, "Login", "isAccountValid");
-            connection.close();
+
             if(result){
-                return new loginResponse(rawResults.getString(1), true);
+                response = new loginResponse(rawResults.getString(1), true);
             }
-            return new loginResponse(false);
+            connection.close();
+            return response == null? new loginResponse(false) : response;
         }
         catch (SQLException e){
             Logger.getInstance().logError(e.getMessage(), "Login", "isAccountValid");

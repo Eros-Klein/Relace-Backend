@@ -1,6 +1,7 @@
 package com.example.demo2;
 
 import com.example.demo2.responseinterfaces.loginResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo2.Message;
@@ -24,15 +25,15 @@ public class Controller {
     }
     @GetMapping("/insertUser/{username}/{password}/{email}")
     public String insertAccount(@PathVariable String email ,@PathVariable String username, @PathVariable String password){
-        return Login.addAccount(username, password, email);
+        return toJson(Login.addAccount(username, password, email));
     }
     @DeleteMapping("/removeAccount/{username}/{password}")
     public boolean removeAccount(@PathVariable String username, @PathVariable String password){
         return Login.removeAccount(username, password);
     }
     @GetMapping("/validUser/{username}/{password}")
-    public loginResponse validAccount(@PathVariable String username, @PathVariable String password){
-            return Login.isAccountValid(username, password);
+    public String validAccount(@PathVariable String username, @PathVariable String password){
+        return toJson(Login.isAccountValid(username, password));
     }
     @GetMapping("/getNewToken/{username}/{password}")
     public String login(@PathVariable String username, @PathVariable String password){
@@ -49,6 +50,16 @@ public class Controller {
     @GetMapping("/getMessages/{username}/{password}")
     public Message[] getMessages(@PathVariable String username, @PathVariable String password){
         return Messenger.getMessages(username, password);
+    }
+
+    public static String toJson(Object obj){
+        ObjectMapper Obj = new ObjectMapper();
+        try{
+            return Obj.writeValueAsString(obj);
+        } catch (Exception e) {
+            Logger.getInstance().logError(e.getMessage(), "Controller", "toJson");
+            throw new RuntimeException(e);
+        }
     }
 
 
